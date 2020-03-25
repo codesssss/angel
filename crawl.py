@@ -13,12 +13,15 @@ company_list = []
 profile_list = []
 # 存储领英url的list
 linkedin_list = []
+# 存储页面数
+count = 0
 
 
 # 获取公司url
 def get_company(driver):
-    global company_list, selector_com
-    for i in range(1, 7):
+    global company_list, selector_com,count
+
+    for i in range(1, count):
         if i == 1:
             company = driver.find_elements_by_css_selector(selector_com)
             for com in company:
@@ -33,9 +36,11 @@ def get_company(driver):
 
 # 加载出所有公司
 def click_update(driver):
-    global selector_new
-    for i in range(1, 6):
-
+    global selector_new, count
+    count_raw = driver.find_element_by_css_selector(
+        "#root > div.page.unmodified.dl85.layouts.fhr17.header._a._jm > div.companies.dc59.fix36._a._jm > div > div.content > div.dc59.frs86._a._jm > div.top > div.count")
+    count = (int(count_raw[:-10]))/20
+    for i in range(1, count):
         if i == 1:
             print(selector_new)
             driver.find_element_by_css_selector(selector_new).click()
